@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MVP_Demo</string>
+    <string name="tv_no_data">暂无数据</string>
+</resources>
