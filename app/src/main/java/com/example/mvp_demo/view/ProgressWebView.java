@@ -20,8 +20,7 @@ public class ProgressWebView extends WebView {
                 LinearLayout.LayoutParams.MATCH_PARENT, 8);
         mProgressBar.setLayoutParams(layoutParams);
 
-        Drawable drawable = context.getResources().getDrawable(
-                R.color.colorAccent);
+        Drawable drawable = context.getResources().getDrawable(R.drawable.shape_progress);
         mProgressBar.setProgressDrawable(drawable);
         addView(mProgressBar);
         setWebChromeClient(new WebChromeClient());

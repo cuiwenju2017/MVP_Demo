@@ -2,7 +2,6 @@ package com.example.mvp_demo.app;
 
 import android.app.Application;
 import android.content.Context;
-import com.example.mvp_demo.R;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -24,9 +23,13 @@ import com.yechaoa.yutils.YUtils;
 
 
 public class App extends Application {
+
+    private Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        this.context = context;
         //初始化
         YUtils.initialize(this);
         //设置打印开关

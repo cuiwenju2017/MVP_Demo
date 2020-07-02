@@ -21,11 +21,8 @@ public class API {
     static final String BASE_URL = "https://www.wanandroid.com/";
 
     public interface WAZApi {
-
         // 广场列表数据
         @GET("user_article/list/{page}/json")
         Observable<BaseBean<UserArticle>> getUserArticleList(@Path("page") Integer page);
-
     }
-
 }
