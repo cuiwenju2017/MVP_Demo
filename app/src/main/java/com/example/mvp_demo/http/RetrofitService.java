@@ -1,12 +1,20 @@
 package com.example.mvp_demo.http;
 
+import android.util.Log;
+
 import com.example.mvp_demo.http.cookie.CookiesManager;
 import com.example.mvp_demo.http.gson.BaseConverterFactory;
 import com.yechaoa.yutils.YUtils;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -50,7 +58,6 @@ public class RetrofitService {
         return apiServer;
     }
 
-
     /**
      * 初始化retrofit
      */
@@ -65,6 +72,7 @@ public class RetrofitService {
                 //设置Cookie持久化
                 .cookieJar(new CookiesManager(YUtils.getApplication()))
                 .build();
+
         //关联okHttp并加上rxJava和Gson的配置和baseUrl
         Retrofit retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
@@ -72,7 +80,7 @@ public class RetrofitService {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(API.BASE_URL)
                 .build();
+
         apiServer = retrofit.create(API.WAZApi.class);
     }
-
 }

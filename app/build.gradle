@@ -53,7 +53,7 @@ dependencies {
     //BRVAH
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
     //banner
-    implementation 'com.youth.banner:banner:1.4.10'
+    implementation 'com.youth.banner:banner:2.0.12'
     //刷新库
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     //recyclerview
