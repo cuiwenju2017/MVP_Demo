@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -65,5 +66,41 @@ public class WebViewActivity extends BaseActivity<WebViewPrensenter> implements 
             }
         });
         pwv.loadUrl(url);
+    }
+
+    /**
+     * 使点击回退按钮不会直接退出整个应用程序而是返回上一个页面
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && pwv.canGoBack()) {
+            pwv.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (pwv != null) {
+            pwv.onResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (pwv != null) {
+            pwv.onPause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (pwv != null) {
+            pwv.destroy();
+        }
     }
 }
