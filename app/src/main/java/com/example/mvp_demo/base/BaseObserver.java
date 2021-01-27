@@ -1,5 +1,7 @@
 package com.example.mvp_demo.base;
 
+import android.util.Log;
+
 import com.google.gson.JsonParseException;
 
 import org.json.JSONException;
@@ -42,9 +44,7 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
 
     @Override
     protected void onStart() {
-        if (view != null && isShowDialog) {
-            view.showLoading();
-        }
+
     }
 
     @Override
@@ -54,10 +54,9 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
 
     @Override
     public void onError(Throwable e) {
-        if (view != null && isShowDialog) {
-            view.hideLoading();
-        }
         BaseException be;
+
+        Log.i("Throwable", "onError: " + e);
 
         if (e != null) {
             //自定义异常
@@ -96,14 +95,11 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
 
     @Override
     public void onComplete() {
-        if (view != null && isShowDialog) {
-            view.hideLoading();
-        }
+
     }
 
 
     public abstract void onSuccess(T o);
 
     public abstract void onError(String msg);
-
 }

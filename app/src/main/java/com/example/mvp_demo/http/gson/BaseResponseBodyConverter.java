@@ -29,7 +29,9 @@ public class BaseResponseBodyConverter<T> implements Converter<ResponseBody, T> 
     @Override
     public T convert(ResponseBody value) throws IOException {
         String jsonString = value.string();
-        try {
+        return adapter.fromJson(jsonString);
+
+       /* try {
             JSONObject object = new JSONObject(jsonString);
             int code = object.getInt("errorCode");
             if (0 != code) {
@@ -52,6 +54,6 @@ public class BaseResponseBodyConverter<T> implements Converter<ResponseBody, T> 
             throw new BaseException(BaseException.PARSE_ERROR_MSG);
         } finally {
             value.close();
-        }
+        }*/
     }
 }

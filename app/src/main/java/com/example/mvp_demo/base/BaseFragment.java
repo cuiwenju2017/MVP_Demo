@@ -74,20 +74,4 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public void onErrorCode(BaseBean bean) {
     }
-
-    /**
-     * 显示加载中
-     */
-    @Override
-    public void showLoading() {
-        YUtils.showLoading(ActivityUtil.getCurrentActivity(), "加载中");
-    }
-
-    /**
-     * 隐藏加载中
-     */
-    @Override
-    public void hideLoading() {
-        YUtils.dismissLoading();
-    }
 }

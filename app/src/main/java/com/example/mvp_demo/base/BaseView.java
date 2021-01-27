@@ -9,11 +9,5 @@ package com.example.mvp_demo.base;
 
 
 public interface BaseView {
-
-    void showLoading();
-
-    void hideLoading();
-
     void onErrorCode(BaseBean bean);
-
 }

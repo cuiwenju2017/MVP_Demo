@@ -1,5 +1,6 @@
 package com.example.mvp_demo.module.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -43,6 +44,7 @@ public class ImageTitleNumAdapter extends BannerAdapter<BannersBean.DataBean, Im
     }
 
     //绑定数据
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindView(BannerViewHolder holder, BannersBean.DataBean data, int position, int size) {
         Glide.with(context).load(data.getImage()).into(holder.imageView);

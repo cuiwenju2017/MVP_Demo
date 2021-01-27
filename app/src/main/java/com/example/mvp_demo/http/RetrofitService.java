@@ -31,6 +31,7 @@ public class RetrofitService {
 
     private volatile static RetrofitService apiRetrofit;
     private API.WAZApi apiServer;
+    private API.GHApi apiServerGH;
 
     /**
      * 单例调用
@@ -58,6 +59,10 @@ public class RetrofitService {
         return apiServer;
     }
 
+    public API.GHApi getApiServiceGH() {
+        return apiServerGH;
+    }
+
     /**
      * 初始化retrofit
      */
@@ -82,5 +87,14 @@ public class RetrofitService {
                 .build();
 
         apiServer = retrofit.create(API.WAZApi.class);
+
+        Retrofit retrofitGH = new Retrofit.Builder()
+                .client(okHttpClient)
+                .addConverterFactory(BaseConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(API.BASE_URL2)
+                .build();
+
+        apiServerGH = retrofitGH.create(API.GHApi.class);
     }
 }

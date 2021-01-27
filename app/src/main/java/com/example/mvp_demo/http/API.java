@@ -1,6 +1,7 @@
 package com.example.mvp_demo.http;
 
 import com.example.mvp_demo.base.BaseBean;
+import com.example.mvp_demo.bean.BannersBean;
 import com.example.mvp_demo.bean.UserArticle;
 
 import io.reactivex.Observable;
@@ -19,16 +20,17 @@ import retrofit2.http.Path;
 public class API {
 
     public static final String BASE_URL = "https://www.wanandroid.com/";
-
     public static final String BASE_URL2 = "https://gank.io/";
 
     public interface WAZApi {
         // 广场列表数据
         @GET("user_article/list/{page}/json")
         Observable<BaseBean<UserArticle>> getUserArticleList(@Path("page") Integer page);
+    }
 
+    public interface GHApi {
         //干货banners图
         @GET("api/v2/banners")
-        Call<ResponseBody> banners();
+        Observable<BannersBean> banners();
     }
 }

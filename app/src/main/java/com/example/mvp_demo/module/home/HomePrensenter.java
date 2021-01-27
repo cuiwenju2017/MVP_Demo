@@ -24,12 +24,26 @@ public class HomePrensenter extends BasePresenter<HomeView> {
         addDisposable(apiServer.getUserArticleList(page), new BaseObserver<BaseBean<UserArticle>>(baseView, true) {
             @Override
             public void onSuccess(BaseBean<UserArticle> bean) {
-                baseView.setUserArticleData(bean, type);
+                baseView.getUserArticleListData(bean, type);
             }
 
             @Override
             public void onError(String msg) {
-                baseView.showUserArticleError(msg, type);
+                baseView.getUserArticleListError(msg, type);
+            }
+        });
+    }
+
+    public void banners() {
+        addDisposable(apiServerGH.banners(), new BaseObserver<BannersBean>(baseView, true) {
+            @Override
+            public void onSuccess(BannersBean bean) {
+                baseView.bannersData(bean);
+            }
+
+            @Override
+            public void onError(String msg) {
+                baseView.onError(msg);
             }
         });
     }
