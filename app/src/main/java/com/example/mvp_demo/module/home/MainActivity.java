@@ -19,6 +19,7 @@ import com.example.mvp_demo.module.adapter.ImageTitleNumAdapter;
 import com.example.mvp_demo.module.webview.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.yechaoa.yutils.ToastUtil;
+import com.yechaoa.yutils.YUtils;
 import com.youth.banner.Banner;
 
 import java.util.List;
@@ -31,8 +32,9 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
     RecyclerView mRecyclerView;
     @BindView(R.id.mRefreshLayout)
     SmartRefreshLayout mRefreshLayout;
+
     private int page = 0;
-    BaseRVAdapter<UserArticle.DatasBean> adapter;
+    private BaseRVAdapter<UserArticle.DatasBean> adapter;
     private Banner banner;
 
     @Override
@@ -53,7 +55,9 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
     @Override
     protected void initData() {
         presenter.banners();//干货banners图
-        presenter.getUserArticleList(page, GetDataType.GETDATA);
+
+        YUtils.showLoading("加载中...");
+        presenter.getUserArticleList(page, GetDataType.GETDATA);// 广场列表数据
 
         adapter = new BaseRVAdapter<UserArticle.DatasBean>(R.layout.item_user_article) {
             @Override
@@ -96,8 +100,9 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
 
     @Override
     public void getUserArticleListData(BaseBean<UserArticle> bean, Integer type) {
-        List<UserArticle.DatasBean> mArticles = bean.data.getDatas();
+        YUtils.dismissLoading();
 
+        List<UserArticle.DatasBean> mArticles = bean.data.getDatas();
         switch (type) {
             case GetDataType.GETDATA://获取数据成功
                 adapter.setNewData(mArticles);
@@ -124,12 +129,17 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
 
     @Override
     public void getUserArticleListError(String msg, Integer type) {
+        YUtils.dismissLoading();
         ToastUtil.showToast(msg);
+        mRefreshLayout.finishRefresh();
+        mRefreshLayout.finishLoadMore();
     }
 
     @Override
     public void onError(String msg) {
         ToastUtil.showToast(msg);
+        mRefreshLayout.finishRefresh();
+        mRefreshLayout.finishLoadMore();
     }
 
     @Override

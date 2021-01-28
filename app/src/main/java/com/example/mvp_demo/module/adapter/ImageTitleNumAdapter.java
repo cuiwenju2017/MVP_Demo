@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mvp_demo.R;
 import com.example.mvp_demo.bean.BannersBean;
-import com.example.mvp_demo.module.home.MainActivity;
 import com.example.mvp_demo.module.webview.WebViewActivity;
 import com.youth.banner.adapter.BannerAdapter;
 
@@ -60,7 +59,7 @@ public class ImageTitleNumAdapter extends BannerAdapter<BannersBean.DataBean, Im
     }
 
 
-    class BannerViewHolder extends RecyclerView.ViewHolder {
+    static class BannerViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView title;
         TextView numIndicator;

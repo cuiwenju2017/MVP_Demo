@@ -2,7 +2,6 @@ package com.example.mvp_demo.module.webview;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -11,19 +10,20 @@ import android.webkit.WebViewClient;
 
 import com.example.mvp_demo.R;
 import com.example.mvp_demo.base.BaseActivity;
+import com.example.mvp_demo.base.BasePresenter;
+import com.example.mvp_demo.base.BaseView;
 import com.example.mvp_demo.view.ProgressWebView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class WebViewActivity extends BaseActivity<WebViewPrensenter> implements WebViewView {
+public class WebViewActivity extends BaseActivity {
 
     @BindView(R.id.pwv)
     ProgressWebView pwv;
 
     @Override
-    protected WebViewPrensenter createPresenter() {
-        return new WebViewPrensenter(this);
+    protected BasePresenter createPresenter() {
+        return null;
     }
 
     @Override

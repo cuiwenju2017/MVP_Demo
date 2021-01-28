@@ -6,6 +6,7 @@ import com.example.mvp_demo.base.BasePresenter;
 import com.example.mvp_demo.bean.BannersBean;
 import com.example.mvp_demo.bean.UserArticle;
 import com.example.mvp_demo.http.API;
+import com.yechaoa.yutils.YUtils;
 
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class HomePrensenter extends BasePresenter<HomeView> {
      * 广场列表数据
      */
     public void getUserArticleList(Integer page, final Integer type) {
-        addDisposable(apiServer.getUserArticleList(page), new BaseObserver<BaseBean<UserArticle>>(baseView, true) {
+        addDisposable(apiServer.getUserArticleList(page), new BaseObserver<BaseBean<UserArticle>>() {
             @Override
             public void onSuccess(BaseBean<UserArticle> bean) {
                 baseView.getUserArticleListData(bean, type);
@@ -34,8 +35,11 @@ public class HomePrensenter extends BasePresenter<HomeView> {
         });
     }
 
+    /**
+     * 干货banners图
+     */
     public void banners() {
-        addDisposable(apiServerGH.banners(), new BaseObserver<BannersBean>(baseView, true) {
+        addDisposable(apiServerGH.banners(), new BaseObserver<BannersBean>() {
             @Override
             public void onSuccess(BannersBean bean) {
                 baseView.bannersData(bean);

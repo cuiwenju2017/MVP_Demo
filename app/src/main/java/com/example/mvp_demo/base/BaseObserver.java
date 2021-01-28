@@ -1,8 +1,12 @@
 package com.example.mvp_demo.base;
 
+import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.mvp_demo.utils.LoadingDialog;
 import com.google.gson.JsonParseException;
+import com.yechaoa.yutils.YUtils;
 
 import org.json.JSONException;
 
@@ -13,6 +17,8 @@ import java.text.ParseException;
 
 import io.reactivex.observers.DisposableObserver;
 import retrofit2.HttpException;
+
+import static com.yechaoa.yutils.YUtils.getApplication;
 
 /**
  * Description : BaseObserver
@@ -25,22 +31,6 @@ import retrofit2.HttpException;
 public abstract class BaseObserver<T> extends DisposableObserver<T> {
 
     protected BaseView view;
-    private boolean isShowDialog;
-
-    protected BaseObserver(BaseView view) {
-        this.view = view;
-    }
-
-    /**
-     * 带进度条的初始化方法
-     *
-     * @param view         view
-     * @param isShowDialog 是否显示进度条
-     */
-    protected BaseObserver(BaseView view, boolean isShowDialog) {
-        this.view = view;
-        this.isShowDialog = isShowDialog;
-    }
 
     @Override
     protected void onStart() {
@@ -97,7 +87,6 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
     public void onComplete() {
 
     }
-
 
     public abstract void onSuccess(T o);
 
