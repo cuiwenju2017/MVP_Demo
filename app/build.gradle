@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.mvp_demo"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -48,8 +48,6 @@ dependencies {
     /*butterknife*/
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
-    //YUtils
-    implementation 'com.github.yechaoa:YUtils:2.1.0'
     //BRVAH
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
     //banner
@@ -58,4 +56,6 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     //recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    //YUtils
+    implementation 'com.github.yechaoa:YUtils:3.2.0'
 }

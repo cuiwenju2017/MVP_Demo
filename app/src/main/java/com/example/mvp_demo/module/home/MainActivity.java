@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
 
     @Override
     public void getUserArticleListData(BaseBean<UserArticle> bean, Integer type) {
-        YUtils.dismissLoading();
+        YUtils.hideLoading();
 
         List<UserArticle.DatasBean> mArticles = bean.data.getDatas();
         switch (type) {
@@ -129,15 +129,15 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
 
     @Override
     public void getUserArticleListError(String msg, Integer type) {
-        YUtils.dismissLoading();
-        ToastUtil.showToast(msg);
+        YUtils.hideLoading();
+        ToastUtil.showCenter(msg);
         mRefreshLayout.finishRefresh();
         mRefreshLayout.finishLoadMore();
     }
 
     @Override
     public void onError(String msg) {
-        ToastUtil.showToast(msg);
+        ToastUtil.showCenter(msg);
         mRefreshLayout.finishRefresh();
         mRefreshLayout.finishLoadMore();
     }
