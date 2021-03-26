@@ -2,6 +2,9 @@ package com.example.mvp_demo.app;
 
 import android.app.Application;
 import android.content.Context;
+
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -10,6 +13,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.mmkv.MMKV;
 import com.yechaoa.yutils.ActivityUtil;
 import com.yechaoa.yutils.LogUtil;
 import com.yechaoa.yutils.YUtils;
@@ -36,6 +40,9 @@ public class App extends Application {
         LogUtil.setIsLog(true);
         //注册Activity生命周期
         registerActivityLifecycleCallbacks(ActivityUtil.getActivityLifecycleCallbacks());
+
+        //初始化MMKV
+        MMKV.initialize(this);
     }
 
     //static 代码段可以防止内存泄露

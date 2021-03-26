@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import com.tencent.mmkv.MMKV;
 import com.yechaoa.yutils.YUtils;
 
 import butterknife.ButterKnife;
@@ -23,6 +25,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView {
 
     protected P presenter;
+    private MMKV kv;
 
     protected abstract P createPresenter();
 
@@ -43,6 +46,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         presenter = createPresenter();
         initView();
         initData();
+
+        kv = MMKV.defaultMMKV();
+        int iValue = kv.decodeInt("night_day");
+        AppCompatDelegate.setDefaultNightMode(iValue);
     }
 
     @Override

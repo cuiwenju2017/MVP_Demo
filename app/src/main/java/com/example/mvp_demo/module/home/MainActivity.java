@@ -1,9 +1,12 @@
 package com.example.mvp_demo.module.home;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +20,9 @@ import com.example.mvp_demo.bean.GetDataType;
 import com.example.mvp_demo.bean.UserArticle;
 import com.example.mvp_demo.module.adapter.ImageTitleNumAdapter;
 import com.example.mvp_demo.module.webview.WebViewActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.tencent.mmkv.MMKV;
 import com.yechaoa.yutils.ToastUtil;
 import com.yechaoa.yutils.YUtils;
 import com.youth.banner.Banner;
@@ -25,6 +30,8 @@ import com.youth.banner.Banner;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<HomePrensenter> implements HomeView {
 
@@ -32,10 +39,13 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
     RecyclerView mRecyclerView;
     @BindView(R.id.mRefreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     private int page = 0;
     private BaseRVAdapter<UserArticle.DatasBean> adapter;
     private Banner banner;
+    private MMKV kv;
 
     @Override
     protected HomePrensenter createPresenter() {
@@ -49,7 +59,7 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
 
     @Override
     protected void initView() {
-
+        kv = MMKV.defaultMMKV();
     }
 
     @Override
@@ -146,5 +156,22 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
     public void bannersData(BannersBean bean) {
         banner.setAdapter(new ImageTitleNumAdapter(MainActivity.this, bean.getData()));
         banner.removeIndicator();
+    }
+
+    @OnClick({R.id.fab})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fab:
+                int mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                if (mode == Configuration.UI_MODE_NIGHT_YES) {
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    kv.encode("night_day", AppCompatDelegate.MODE_NIGHT_NO);
+                } else if (mode == Configuration.UI_MODE_NIGHT_NO) {
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    kv.encode("night_day", AppCompatDelegate.MODE_NIGHT_YES);
+                }
+                recreate();
+                break;
+        }
     }
 }
