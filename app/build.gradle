@@ -12,6 +12,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true//解决65535必须
     }
 
     buildTypes {
@@ -55,9 +56,6 @@ dependencies {
     /*glide*/
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
-    /*butterknife*/
-    /*implementation 'com.jakewharton:butterknife:10.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'*/
     //BRVAH
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
     //banner
@@ -72,4 +70,6 @@ dependencies {
     implementation 'com.tencent:mmkv-static:1.2.7'
     //material
     implementation 'com.google.android.material:material:1.0.0'
+    //解决65535库
+    implementation 'androidx.multidex:multidex:2.0.0'
 }

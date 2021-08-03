@@ -26,7 +26,7 @@ import com.yechaoa.yutils.YUtils;
  */
 
 
-public class App extends Application {
+public class App extends BaseApplication {
 
     private Context context;
 
