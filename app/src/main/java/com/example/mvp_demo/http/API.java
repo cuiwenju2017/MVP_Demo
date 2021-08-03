@@ -3,6 +3,7 @@ package com.example.mvp_demo.http;
 import com.example.mvp_demo.base.BaseBean;
 import com.example.mvp_demo.bean.BannersBean;
 import com.example.mvp_demo.bean.UserArticle;
+import com.tencent.mmkv.MMKV;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -21,6 +22,7 @@ public class API {
 
     public static final String BASE_URL = "https://www.wanandroid.com/";
     public static final String BASE_URL2 = "https://gank.io/";
+    public static MMKV kv = MMKV.defaultMMKV();
 
     public interface WAZApi {
         // 广场列表数据

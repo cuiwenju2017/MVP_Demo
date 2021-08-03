@@ -5,15 +5,16 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.viewbinding.ViewBinding;
 
+import com.example.mvp_demo.http.API;
 import com.tencent.mmkv.MMKV;
-import com.yechaoa.yutils.YUtils;
-
-import butterknife.ButterKnife;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 
 /**
  * Description : BaseActivity
@@ -22,34 +23,39 @@ import butterknife.ButterKnife;
  * @date 2020/2/7
  */
 
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity<T extends ViewBinding, P extends BasePresenter> extends AppCompatActivity implements BaseView {
 
     protected P presenter;
-    private MMKV kv;
 
     protected abstract P createPresenter();
-
-    protected abstract int getLayoutId();
 
     protected abstract void initView();
 
     protected abstract void initData();
 
+    protected T viewBinding;
+
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //设置竖屏
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(LayoutInflater.from(this).inflate(getLayoutId(), null));
-        ButterKnife.bind(this);
-        presenter = createPresenter();
-        initView();
-        initData();
+        ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
+        Class cls = (Class) type.getActualTypeArguments()[0];
+        try {
+            Method inflate = cls.getDeclaredMethod("inflate", LayoutInflater.class);
+            viewBinding = (T) inflate.invoke(null, getLayoutInflater());
+            setContentView(viewBinding.getRoot());
+            //设置竖屏
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            presenter = createPresenter();
+            initView();
+            initData();
 
-        kv = MMKV.defaultMMKV();
-        int iValue = kv.decodeInt("night_day");
-        AppCompatDelegate.setDefaultNightMode(iValue);
+            int iValue = API.kv.decodeInt("night_day");
+            AppCompatDelegate.setDefaultNightMode(iValue);
+        } catch (NoSuchMethodException | IllegalAccessException| InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -90,6 +96,4 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             finish();
         }
     }
-
-
 }

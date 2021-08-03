@@ -2,13 +2,11 @@ package com.example.mvp_demo.module.home;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mvp_demo.R;
 import com.example.mvp_demo.base.BaseActivity;
@@ -18,10 +16,10 @@ import com.example.mvp_demo.base.BaseRVHolder;
 import com.example.mvp_demo.bean.BannersBean;
 import com.example.mvp_demo.bean.GetDataType;
 import com.example.mvp_demo.bean.UserArticle;
+import com.example.mvp_demo.databinding.ActivityMainBinding;
+import com.example.mvp_demo.http.API;
 import com.example.mvp_demo.module.adapter.ImageTitleNumAdapter;
 import com.example.mvp_demo.module.webview.WebViewActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.tencent.mmkv.MMKV;
 import com.yechaoa.yutils.ToastUtil;
 import com.yechaoa.yutils.YUtils;
@@ -29,23 +27,11 @@ import com.youth.banner.Banner;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-public class MainActivity extends BaseActivity<HomePrensenter> implements HomeView {
-
-    @BindView(R.id.mRecyclerView)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.mRefreshLayout)
-    SmartRefreshLayout mRefreshLayout;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+public class MainActivity extends BaseActivity<ActivityMainBinding, HomePrensenter> implements HomeView, View.OnClickListener {
 
     private int page = 0;
     private BaseRVAdapter<UserArticle.DatasBean> adapter;
     private Banner banner;
-    private MMKV kv;
 
     @Override
     protected HomePrensenter createPresenter() {
@@ -53,13 +39,8 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
-
-    @Override
     protected void initView() {
-        kv = MMKV.defaultMMKV();
+        viewBinding.fab.setOnClickListener(this);
     }
 
     @Override
@@ -93,19 +74,19 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
         banner = header.findViewById(R.id.banner);
         adapter.addHeaderView(header);
 
-        mRefreshLayout.setOnRefreshListener(refreshLayout -> {//下拉刷新
+        viewBinding.mRefreshLayout.setOnRefreshListener(refreshLayout -> {//下拉刷新
             page = 0;
             presenter.getUserArticleList(page, GetDataType.REFRESH);
             presenter.banners();//干货banners图
         });
 
-        mRefreshLayout.setOnLoadMoreListener(refreshLayout -> {//上拉加载更多
+        viewBinding.mRefreshLayout.setOnLoadMoreListener(refreshLayout -> {//上拉加载更多
             page++;
             presenter.getUserArticleList(page, GetDataType.LOADMORE);
         });
 
-        mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));//列数设置
+        viewBinding.mRecyclerView.setAdapter(adapter);
+        viewBinding.mRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));//列数设置
     }
 
     @Override
@@ -119,19 +100,19 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
                 break;
             case GetDataType.REFRESH://刷新成功
                 adapter.setNewData(mArticles);
-                mRefreshLayout.finishRefresh();
-                mRefreshLayout.setNoMoreData(false);
+                viewBinding.mRefreshLayout.finishRefresh();
+                viewBinding.mRefreshLayout.setNoMoreData(false);
                 break;
             case GetDataType.LOADMORE://加载成功
                 if (mArticles != null && !mArticles.isEmpty()) {
                     adapter.addData(mArticles);
                     if (mArticles.size() < page) {
-                        mRefreshLayout.finishLoadMoreWithNoMoreData();
+                        viewBinding.mRefreshLayout.finishLoadMoreWithNoMoreData();
                     } else {
-                        mRefreshLayout.finishLoadMore();
+                        viewBinding.mRefreshLayout.finishLoadMore();
                     }
                 } else {
-                    mRefreshLayout.finishLoadMoreWithNoMoreData();
+                    viewBinding.mRefreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 break;
         }
@@ -141,15 +122,15 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
     public void getUserArticleListError(String msg, Integer type) {
         YUtils.hideLoading();
         ToastUtil.showCenter(msg);
-        mRefreshLayout.finishRefresh();
-        mRefreshLayout.finishLoadMore();
+        viewBinding.mRefreshLayout.finishRefresh();
+        viewBinding.mRefreshLayout.finishLoadMore();
     }
 
     @Override
     public void onError(String msg) {
         ToastUtil.showCenter(msg);
-        mRefreshLayout.finishRefresh();
-        mRefreshLayout.finishLoadMore();
+        viewBinding.mRefreshLayout.finishRefresh();
+        viewBinding.mRefreshLayout.finishLoadMore();
     }
 
     @Override
@@ -158,17 +139,17 @@ public class MainActivity extends BaseActivity<HomePrensenter> implements HomeVi
         banner.removeIndicator();
     }
 
-    @OnClick({R.id.fab})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.fab:
                 int mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
                 if (mode == Configuration.UI_MODE_NIGHT_YES) {
                     getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    kv.encode("night_day", AppCompatDelegate.MODE_NIGHT_NO);
+                    API.kv.encode("night_day", AppCompatDelegate.MODE_NIGHT_NO);
                 } else if (mode == Configuration.UI_MODE_NIGHT_NO) {
                     getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    kv.encode("night_day", AppCompatDelegate.MODE_NIGHT_YES);
+                    API.kv.encode("night_day", AppCompatDelegate.MODE_NIGHT_YES);
                 }
                 recreate();
                 break;

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -12,23 +13,13 @@ import com.example.mvp_demo.R;
 import com.example.mvp_demo.base.BaseActivity;
 import com.example.mvp_demo.base.BasePresenter;
 import com.example.mvp_demo.base.BaseView;
-import com.example.mvp_demo.view.ProgressWebView;
+import com.example.mvp_demo.databinding.ActivityWebViewBinding;
 
-import butterknife.BindView;
-
-public class WebViewActivity extends BaseActivity {
-
-    @BindView(R.id.pwv)
-    ProgressWebView pwv;
+public class WebViewActivity extends BaseActivity<ActivityWebViewBinding,BasePresenter> {
 
     @Override
     protected BasePresenter createPresenter() {
         return null;
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_web_view;
     }
 
     @Override
@@ -39,8 +30,8 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void initData() {
         String url = getIntent().getStringExtra("link");
-        pwv.getSettings().setJavaScriptEnabled(true);
-        pwv.setWebViewClient(new WebViewClient() {
+        viewBinding.pwv.getSettings().setJavaScriptEnabled(true);
+        viewBinding.pwv.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 WebView.HitTestResult hit = view.getHitTestResult();
@@ -65,7 +56,7 @@ public class WebViewActivity extends BaseActivity {
                 }
             }
         });
-        pwv.loadUrl(url);
+        viewBinding.pwv.loadUrl(url);
     }
 
     /**
@@ -73,8 +64,8 @@ public class WebViewActivity extends BaseActivity {
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && pwv.canGoBack()) {
-            pwv.goBack();
+        if (keyCode == KeyEvent.KEYCODE_BACK && viewBinding.pwv.canGoBack()) {
+            viewBinding.pwv.goBack();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -83,24 +74,24 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (pwv != null) {
-            pwv.onResume();
+        if (viewBinding.pwv != null) {
+            viewBinding.pwv.onResume();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (pwv != null) {
-            pwv.onPause();
+        if (viewBinding.pwv != null) {
+            viewBinding.pwv.onPause();
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (pwv != null) {
-            pwv.destroy();
+        if (viewBinding.pwv != null) {
+            viewBinding.pwv.destroy();
         }
     }
 }

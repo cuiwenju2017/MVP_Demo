@@ -68,7 +68,10 @@ public class RetrofitService {
      */
     private RetrofitService() {
         //配置okHttp并设置时间、日志信息和cookies
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(message -> {
+            //打印请求日志
+//            Log.e("RetrofitService", "|" + message);
+        });
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
