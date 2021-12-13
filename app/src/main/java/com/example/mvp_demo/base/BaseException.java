@@ -32,6 +32,7 @@ public class BaseException extends IOException {
      * 未知错误
      */
     public static final String OTHER_MSG = "未知错误";
+    public static final String TOKEN_INVALIDATION = "Token失效";
 
     private String errorMsg;
     private int errorCode;

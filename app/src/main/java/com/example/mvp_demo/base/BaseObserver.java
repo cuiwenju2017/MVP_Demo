@@ -63,7 +63,11 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
             } else {
                 if (e instanceof HttpException) {
                     //HTTP错误
-                    be = new BaseException(BaseException.BAD_NETWORK_MSG, e);
+                    if (((HttpException) e).code() == 401) {
+                        be = new BaseException(BaseException.TOKEN_INVALIDATION, e);
+                    } else {
+                        be = new BaseException(BaseException.BAD_NETWORK_MSG, e);
+                    }
                 } else if (e instanceof ConnectException || e instanceof UnknownHostException) {
                     //连接错误
                     be = new BaseException(BaseException.CONNECT_ERROR_MSG, e);
