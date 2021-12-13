@@ -21,18 +21,15 @@ import retrofit2.http.Path;
 public class API {
 
     public static final String BASE_URL = "https://www.wanandroid.com/";
-    public static final String BASE_URL2 = "https://gank.io/";
     public static MMKV kv = MMKV.defaultMMKV();
 
     public interface WAZApi {
         // 广场列表数据
         @GET("user_article/list/{page}/json")
         Observable<BaseBean<UserArticle>> getUserArticleList(@Path("page") Integer page);
-    }
 
-    public interface GHApi {
         //干货banners图
-        @GET("api/v2/banners")
+        @GET("banner/json")
         Observable<BannersBean> banners();
     }
 }

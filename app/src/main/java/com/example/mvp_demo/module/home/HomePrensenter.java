@@ -39,7 +39,7 @@ public class HomePrensenter extends BasePresenter<HomeView> {
      * 干货banners图
      */
     public void banners() {
-        addDisposable(apiServerGH.banners(), new BaseObserver<BannersBean>() {
+        addDisposable(apiServer.banners(), new BaseObserver<BannersBean>() {
             @Override
             public void onSuccess(BannersBean bean) {
                 baseView.bannersData(bean);

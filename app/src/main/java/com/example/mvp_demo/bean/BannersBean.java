@@ -5,19 +5,29 @@ import java.util.List;
 public class BannersBean {
 
     /**
-     * data : [{"image":"http://gank.io/images/cfb4028bfead41e8b6e34057364969d1","title":"干货集中营新版更新","url":"https://gank.io/migrate_progress"},{"image":"http://gank.io/images/aebca647b3054757afd0e54d83e0628e","title":"- 春水初生，春林初盛，春风十里，不如你。","url":"https://gank.io/post/5e51497b6e7524f833c3f7a8"},{"image":"https://pic.downk.cc/item/5e7b64fd504f4bcb040fae8f.jpg","title":"盘点国内那些免费好用的图床","url":"https://gank.io/post/5e7b5a8b6d2e518fdeab27aa"}]
-     * status : 100
+     * data : [{"desc":"一起来做个App吧","id":10,"imagePath":"https://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png","isVisible":1,"order":1,"title":"一起来做个App吧","type":0,"url":"https://www.wanandroid.com/blog/show/2"},{"desc":"","id":6,"imagePath":"https://www.wanandroid.com/blogimgs/62c1bd68-b5f3-4a3c-a649-7ca8c7dfabe6.png","isVisible":1,"order":1,"title":"我们新增了一个常用导航Tab~","type":1,"url":"https://www.wanandroid.com/navi"},{"desc":"","id":20,"imagePath":"https://www.wanandroid.com/blogimgs/90c6cc12-742e-4c9f-b318-b912f163b8d0.png","isVisible":1,"order":2,"title":"flutter 中文社区 ","type":1,"url":"https://flutter.cn/"}]
+     * errorCode : 0
+     * errorMsg :
      */
 
-    private int status;
+    private int errorCode;
+    private String errorMsg;
     private List<DataBean> data;
 
-    public int getStatus() {
-        return status;
+    public int getErrorCode() {
+        return errorCode;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
     public List<DataBean> getData() {
@@ -30,21 +40,63 @@ public class BannersBean {
 
     public static class DataBean {
         /**
-         * image : http://gank.io/images/cfb4028bfead41e8b6e34057364969d1
-         * title : 干货集中营新版更新
-         * url : https://gank.io/migrate_progress
+         * desc : 一起来做个App吧
+         * id : 10
+         * imagePath : https://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png
+         * isVisible : 1
+         * order : 1
+         * title : 一起来做个App吧
+         * type : 0
+         * url : https://www.wanandroid.com/blog/show/2
          */
 
-        private String image;
+        private String desc;
+        private int id;
+        private String imagePath;
+        private int isVisible;
+        private int order;
         private String title;
+        private int type;
         private String url;
 
-        public String getImage() {
-            return image;
+        public String getDesc() {
+            return desc;
         }
 
-        public void setImage(String image) {
-            this.image = image;
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getImagePath() {
+            return imagePath;
+        }
+
+        public void setImagePath(String imagePath) {
+            this.imagePath = imagePath;
+        }
+
+        public int getIsVisible() {
+            return isVisible;
+        }
+
+        public void setIsVisible(int isVisible) {
+            this.isVisible = isVisible;
+        }
+
+        public int getOrder() {
+            return order;
+        }
+
+        public void setOrder(int order) {
+            this.order = order;
         }
 
         public String getTitle() {
@@ -53,6 +105,14 @@ public class BannersBean {
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
         }
 
         public String getUrl() {
